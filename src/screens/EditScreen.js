@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
-import { Feather, EvilIcons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
+import BlogPostForm from '../components/BlogPostForm';
 
 const EditScreen = ({ navigation }) => {
+    const { state } = useContext(Context);
 
-    return (
-        <View>
-            <Text>Edit Screen - {navigation.getParam('id')}</Text>
-        </View>
+    const blogPost = state.find(
+        blogPost => blogPost.id === navigation.getParam('id')
     );
+
+    return <BlogPostForm
+        initialValues={{ title: blogPost.title, content: blogPost.content }}
+        onSubmit={(title, content) => {
+            console.log(title, content);
+        }} />;
 };
 
 EditScreen.navigationOptions = ({ navigation }) => {
